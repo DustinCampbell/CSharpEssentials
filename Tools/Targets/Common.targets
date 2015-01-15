@@ -1,0 +1,51 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- This file is imported by all projects at the beginning of the project files -->
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+  	      Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
+  <!-- Path settings -->
+  <PropertyGroup>
+  	<RootPath Condition=" '$(RootPath)' == '' ">$(MSBuildProjectDirectory)$(RelativePath)</RootPath>
+    <BinariesPath Condition=" '$(BinariesPath)' == '' ">$(RootPath)\Binaries</BinariesPath>
+    <ToolsPath Condition=" '$(ToolsPath)' == '' ">$(RootPath)\Tools</ToolsPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(OutDir)' == '' ">
+    <!-- If we don't already have an OutDir, set one-->
+    <OutDir>$(BinariesPath)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>$(OutDir)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  
+</Project>
