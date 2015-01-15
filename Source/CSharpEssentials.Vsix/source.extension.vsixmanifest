@@ -16,5 +16,6 @@
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" d:ProjectName="CSharpEssentials" Path="|CSharpEssentials|"/>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="CSharpEssentials" Path="|CSharpEssentials|" />
   </Assets>
 </PackageManifest>
