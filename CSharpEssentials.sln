@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEssentials", "Source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEssentials.Vsix", "Source\CSharpEssentials.Vsix\CSharpEssentials.Vsix.csproj", "{492E0C25-5F7B-4E4B-8E70-902B67CEF12F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEssentials.Tests", "Source\CSharpEssentials.Tests\CSharpEssentials.Tests.csproj", "{D2EEB787-CDD1-457B-9730-A8945C09C2E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{492E0C25-5F7B-4E4B-8E70-902B67CEF12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{492E0C25-5F7B-4E4B-8E70-902B67CEF12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{492E0C25-5F7B-4E4B-8E70-902B67CEF12F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2EEB787-CDD1-457B-9730-A8945C09C2E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2EEB787-CDD1-457B-9730-A8945C09C2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2EEB787-CDD1-457B-9730-A8945C09C2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2EEB787-CDD1-457B-9730-A8945C09C2E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
