@@ -13,6 +13,8 @@
     <Compile Include="DiagnosticCategories.cs" />
     <Compile Include="DiagnosticIds.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GetterOnlyAutoProperty\UseGetterOnlyAutoPropertyAnalyzer.cs" />
+    <Compile Include="GetterOnlyAutoProperty\UseGetterOnlyAutoPropertyCodeFix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseNameOf\UseNameOfAnalyzer.cs" />
     <Compile Include="UseNameOf\UseNameOfCodeFix.cs" />

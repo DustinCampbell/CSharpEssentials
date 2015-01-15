@@ -16,11 +16,9 @@ namespace CSharpEssentials.UseNameOf
             id: DiagnosticIds.UseNameOf,
             title: "Use nameof when passing parameter names as arguments",
             messageFormat: "Consider using nameof for the parameter name, '{0}'",
-            category: DiagnosticIds.UseNameOf,
+            category: DiagnosticCategories.Language,
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
-
-        public UseNameOfAnalyzer() { }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor);
 
