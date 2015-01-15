@@ -4,12 +4,10 @@
     <Identity Id="CSharpEssentials.b317d43c-08cc-4eb2-8035-414864fda0cb" Version="1.0" Language="en-US" Publisher="Dustinn Campbell"/>
     <DisplayName>C# Essentials</DisplayName>
     <Description xml:space="preserve">A collection of Roslyn diagnostics and code fixes to support C# 6 language features.</Description>
+    <License>License.rtf</License>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.Pro" />
-    <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
-    <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.VWDExpress" />
-    <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.VSWinExpress" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
