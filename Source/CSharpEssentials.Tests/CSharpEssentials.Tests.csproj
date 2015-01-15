@@ -89,7 +89,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\CSharpEssentials\CSharpEssentials.csproj">
+    <ProjectReference Include="..\CSharpEssentials\CSharpEssentials.csproj">
       <Project>{956db36b-cfc3-446f-b80b-a464cadb9c17}</Project>
       <Name>CSharpEssentials</Name>
     </ProjectReference>
