@@ -40,7 +40,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             return context.Document.WithSyntaxRoot(newRoot);
         }
 
-        public override ImmutableArray<string> GetFixableDiagnosticIds() => ImmutableArray.Create(DiagnosticIds.UseGetterOnlyAutoProperties);
+        public override ImmutableArray<string> GetFixableDiagnosticIds() => ImmutableArray.Create(DiagnosticIds.UseGetterOnlyAutoProperty);
 
         public override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
     }

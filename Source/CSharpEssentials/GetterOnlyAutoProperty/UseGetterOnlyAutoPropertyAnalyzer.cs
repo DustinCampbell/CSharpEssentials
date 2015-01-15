@@ -10,7 +10,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
     internal class UseGetterOnlyAutoPropertyAnalyzer : DiagnosticAnalyzer
     {
         public static readonly DiagnosticDescriptor Descriptor = new DiagnosticDescriptor(
-            id: DiagnosticIds.UseGetterOnlyAutoProperties,
+            id: DiagnosticIds.UseGetterOnlyAutoProperty,
             title: "Use getter-only auto properties",
             messageFormat: "Consider using a getter-only auto property",
             category: DiagnosticCategories.Language,
