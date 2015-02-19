@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace CSharpEssentials.UseNameOf
 {
@@ -34,7 +34,7 @@ namespace CSharpEssentials.UseNameOf
                     arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
-            var newRoot = root.ReplaceNode<SyntaxNode, ExpressionSyntax>(literalExpression, nameOfExpression);
+            var newRoot = root.ReplaceNode(literalExpression, nameOfExpression);
 
             return document.WithSyntaxRoot(newRoot);
         }
