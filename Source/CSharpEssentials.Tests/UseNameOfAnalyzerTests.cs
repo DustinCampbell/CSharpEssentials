@@ -1,5 +1,4 @@
-﻿using System;
-using CSharpEssentials.UseNameOf;
+﻿using CSharpEssentials.UseNameOf;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 

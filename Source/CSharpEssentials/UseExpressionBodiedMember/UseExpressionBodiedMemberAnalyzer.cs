@@ -168,6 +168,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return false;
             }
 
+            if (accessor.AttributeLists.Count != 0)
+            {
+                return false;
+            }
+
             var accessorBody = accessor.Body;
             if (accessorBody == null)
             {
