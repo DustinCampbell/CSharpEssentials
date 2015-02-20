@@ -9,24 +9,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     internal class UseExpressionBodiedMemberAnalyzer : DiagnosticAnalyzer
     {
-        public static readonly DiagnosticDescriptor FadedTokenDescriptor = new DiagnosticDescriptor(
-            id: "FadedToken",
-            title: "Use expression-bodied members",
-            messageFormat: "Consider using an expression-bodied member",
-            category: DiagnosticCategories.Language,
-            defaultSeverity: DiagnosticSeverity.Hidden,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.Unnecessary });
-
-        public static readonly DiagnosticDescriptor Descriptor = new DiagnosticDescriptor(
-            id: DiagnosticIds.UseExpressionBodiedMember,
-            title: "Use expression-bodied members",
-            messageFormat: "Consider using an expression-bodied member",
-            category: DiagnosticCategories.Language,
-            defaultSeverity: DiagnosticSeverity.Info,
-            isEnabledByDefault: true);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(FadedTokenDescriptor, Descriptor);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
+            ImmutableArray.Create(DiagnosticDescriptors.FadedToken, DiagnosticDescriptors.UseExpressionBodiedMember);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -55,7 +39,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return;
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Descriptor, methodDecl.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseExpressionBodiedMember, methodDecl.GetLocation()));
         }
 
         private void HandleOperatorDeclaration(SyntaxNodeAnalysisContext context)
@@ -71,7 +55,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return;
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Descriptor, operatorDecl.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseExpressionBodiedMember, operatorDecl.GetLocation()));
         }
 
         private void HandleConversionOperatorDeclaration(SyntaxNodeAnalysisContext context)
@@ -87,7 +71,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return;
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Descriptor, conversionOperatorDecl.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseExpressionBodiedMember, conversionOperatorDecl.GetLocation()));
         }
 
         private static void HandlePropertyDeclaration(SyntaxNodeAnalysisContext context)
@@ -103,7 +87,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return;
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Descriptor, propertyDecl.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseExpressionBodiedMember, propertyDecl.GetLocation()));
         }
 
         private void HandleIndexerDeclaration(SyntaxNodeAnalysisContext context)
@@ -119,7 +103,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
                 return;
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Descriptor, indexerDecl.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseExpressionBodiedMember, indexerDecl.GetLocation()));
         }
 
         private static bool TryHandleBlock(SyntaxNodeAnalysisContext context, BlockSyntax block)
@@ -206,7 +190,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
         {
             if (!token.IsMissing)
             {
-                context.ReportDiagnostic(Diagnostic.Create(FadedTokenDescriptor, token.GetLocation()));
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.FadedToken, token.GetLocation()));
             }
         }
     }
