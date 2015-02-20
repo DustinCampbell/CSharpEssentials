@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -6,6 +7,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Formatting;
 
 namespace CSharpEssentials.UseExpressionBodiedMember
 {
@@ -56,7 +58,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             var newDeclaration = declaration
                 .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
                 .WithBody(null)
-                .WithSemicolonToken(GetSemicolon(declaration.Body));
+                .WithSemicolonToken(GetSemicolon(declaration.Body))
+                .WithAdditionalAnnotations(Formatter.Annotation);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(declaration, newDeclaration);
@@ -69,7 +72,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             var newDeclaration = declaration
                 .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
                 .WithBody(null)
-                .WithSemicolonToken(GetSemicolon(declaration.Body));
+                .WithSemicolonToken(GetSemicolon(declaration.Body))
+                .WithAdditionalAnnotations(Formatter.Annotation);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(declaration, newDeclaration);
@@ -82,7 +86,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             var newDeclaration = declaration
                 .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
                 .WithBody(null)
-                .WithSemicolonToken(GetSemicolon(declaration.Body));
+                .WithSemicolonToken(GetSemicolon(declaration.Body))
+                .WithAdditionalAnnotations(Formatter.Annotation);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(declaration, newDeclaration);
@@ -95,7 +100,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             var newDeclaration = declaration
                 .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
                 .WithAccessorList(null)
-                .WithSemicolon(GetSemicolon(declaration.AccessorList));
+                .WithSemicolon(GetSemicolon(declaration.AccessorList))
+                .WithAdditionalAnnotations(Formatter.Annotation);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(declaration, newDeclaration);
@@ -108,7 +114,8 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             var newDeclaration = declaration
                 .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
                 .WithAccessorList(null)
-                .WithSemicolon(GetSemicolon(declaration.AccessorList));
+                .WithSemicolon(GetSemicolon(declaration.AccessorList))
+                .WithAdditionalAnnotations(Formatter.Annotation);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(declaration, newDeclaration);
@@ -128,12 +135,30 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static SyntaxToken GetSemicolon(BlockSyntax block)
         {
-            return ((ReturnStatementSyntax)block.Statements[0]).SemicolonToken;
+            var semicolon = ((ReturnStatementSyntax)block.Statements[0]).SemicolonToken;
+
+            var trivia = semicolon.TrailingTrivia.AsEnumerable();
+            trivia = trivia.Where(t => !t.IsKind(SyntaxKind.EndOfLineTrivia));
+
+            // Append trailing trivia from the closing brace.
+            var closeBraceTrivia = block.CloseBraceToken.TrailingTrivia.AsEnumerable();
+            trivia = trivia.Concat(closeBraceTrivia);
+
+            return semicolon.WithTrailingTrivia(trivia);
         }
 
         private static SyntaxToken GetSemicolon(AccessorListSyntax accessorList)
         {
-            return ((ReturnStatementSyntax)accessorList.Accessors[0].Body.Statements[0]).SemicolonToken;
+            var semicolon = ((ReturnStatementSyntax)accessorList.Accessors[0].Body.Statements[0]).SemicolonToken;
+
+            var trivia = semicolon.TrailingTrivia.AsEnumerable();
+            trivia = trivia.Where(t => !t.IsKind(SyntaxKind.EndOfLineTrivia));
+
+            // Append trailing trivia from the closing brace.
+            var closeBraceTrivia = accessorList.CloseBraceToken.TrailingTrivia.AsEnumerable();
+            trivia = trivia.Concat(closeBraceTrivia);
+
+            return semicolon.WithTrailingTrivia(trivia);
         }
 
         public override ImmutableArray<string> GetFixableDiagnosticIds()
