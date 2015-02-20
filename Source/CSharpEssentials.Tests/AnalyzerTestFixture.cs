@@ -21,7 +21,7 @@ namespace CSharpEssentials.Tests
             Assert.That(diagnostics.All(d => d.Id == diagnosticId), Is.True);
         }
 
-        protected void Diagnostic(string markupCode, string diagnosticId)
+        protected void HasDiagnostic(string markupCode, string diagnosticId)
         {
             Document document;
             TextSpan span;
