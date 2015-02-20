@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DiagnosticCategories.cs" />
+    <Compile Include="DiagnosticDescriptors.cs" />
     <Compile Include="DiagnosticIds.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GetterOnlyAutoProperty\UseGetterOnlyAutoPropertyAnalyzer.cs" />

@@ -12,15 +12,8 @@ namespace CSharpEssentials.UseNameOf
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     internal class UseNameOfAnalyzer : DiagnosticAnalyzer
     {
-        public static readonly DiagnosticDescriptor Descriptor = new DiagnosticDescriptor(
-            id: DiagnosticIds.UseNameOf,
-            title: "Use nameof when passing parameter names as arguments",
-            messageFormat: "Consider using nameof for the parameter name, '{0}'",
-            category: DiagnosticCategories.Language,
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true);
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
+            ImmutableArray.Create(DiagnosticDescriptors.UseNameOf);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -53,7 +46,7 @@ namespace CSharpEssentials.UseNameOf
                     // parameter name.
                     if (argumentInfo.Parameter?.Name == "paramName")
                     {
-                        context.ReportDiagnostic(Diagnostic.Create(Descriptor, expression.GetLocation(), stringText));
+                        context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.UseNameOf, expression.GetLocation(), stringText));
                     }
                 }
             }

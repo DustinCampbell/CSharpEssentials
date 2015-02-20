@@ -57,7 +57,7 @@ class C
     }
 }";
 
-            Diagnostic(code, DiagnosticIds.UseNameOf);
+            HasDiagnostic(code, DiagnosticIds.UseNameOf);
         }
 
         [Test]
@@ -89,7 +89,7 @@ class C
     }
 }";
 
-            Diagnostic(code, DiagnosticIds.UseNameOf);
+            HasDiagnostic(code, DiagnosticIds.UseNameOf);
         }
 
         [Test]
@@ -108,7 +108,7 @@ class C
     }
 }";
 
-            Diagnostic(code, DiagnosticIds.UseNameOf);
+            HasDiagnostic(code, DiagnosticIds.UseNameOf);
         }
     }
 }

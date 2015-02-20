@@ -9,16 +9,8 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     internal class UseGetterOnlyAutoPropertyAnalyzer : DiagnosticAnalyzer
     {
-        public static readonly DiagnosticDescriptor Descriptor = new DiagnosticDescriptor(
-            id: DiagnosticIds.UseGetterOnlyAutoProperty,
-            title: "Use getter-only auto properties",
-            messageFormat: "Consider using a getter-only auto property",
-            category: DiagnosticCategories.Language,
-            defaultSeverity: DiagnosticSeverity.Info,
-            isEnabledByDefault: true,
-            customTags: new[] { WellKnownDiagnosticTags.Unnecessary });
-
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
+            ImmutableArray.Create(DiagnosticDescriptors.UseGetterOnlyAutoProperty);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -33,7 +25,10 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                 !accessorDeclaration.SemicolonToken.IsMissing &&
                 accessorDeclaration.Modifiers.Any(SyntaxKind.PrivateKeyword))
             {
-                context.ReportDiagnostic(Diagnostic.Create(Descriptor, accessorDeclaration.GetLocation()));
+                context.ReportDiagnostic(
+                    Diagnostic.Create(
+                        DiagnosticDescriptors.UseGetterOnlyAutoProperty,
+                        accessorDeclaration.GetLocation()));
             }
         }
     }

@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+//using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace CSharpEssentials.UseNameOf
 {
@@ -28,10 +29,16 @@ namespace CSharpEssentials.UseNameOf
         private async Task<Document> ReplaceWithNameOf(Document document, LiteralExpressionSyntax literalExpression, CancellationToken cancellationToken)
         {
             var stringText = literalExpression.Token.ValueText;
-            var nameOfExpression = InvocationExpression(
-                expression: IdentifierName("nameof"),
-                argumentList: ArgumentList(
-                    arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
+
+            //var nameOfExpression = InvocationExpression(
+            //    expression: IdentifierName("nameof"),
+            //    argumentList: ArgumentList(
+            //        arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
+
+            var nameOfExpression = SyntaxFactory.InvocationExpression(
+                expression: SyntaxFactory.IdentifierName("nameof"),
+                argumentList: SyntaxFactory.ArgumentList(
+                    arguments: SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(stringText)))));
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(literalExpression, nameOfExpression);
