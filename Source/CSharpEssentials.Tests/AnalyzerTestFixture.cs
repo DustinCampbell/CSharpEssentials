@@ -41,13 +41,13 @@ namespace CSharpEssentials.Tests
         {
             var analyzers = ImmutableArray.Create(CreateAnalyzer());
             var compilation = document.Project.GetCompilationAsync(CancellationToken.None).Result;
-            var driver = AnalyzerDriver.Create(compilation, analyzers, null, out compilation, CancellationToken.None);
+			var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers, cancellationToken: CancellationToken.None);
             var discarded = compilation.GetDiagnostics(CancellationToken.None);
 
             var tree = document.GetSyntaxTreeAsync(CancellationToken.None).Result;
 
             var builder = ImmutableArray.CreateBuilder<Diagnostic>();
-            foreach (var diagnostic in driver.GetDiagnosticsAsync().Result)
+            foreach (var diagnostic in compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync().Result)
             {
                 var location = diagnostic.Location;
                 if (location.IsInSource &&
