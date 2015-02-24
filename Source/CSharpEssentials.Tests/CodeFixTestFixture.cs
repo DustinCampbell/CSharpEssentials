@@ -52,7 +52,7 @@ namespace CSharpEssentials.Tests
 
             var context = new CodeFixContext(document, diagnostic, registerFix, CancellationToken.None);
             var provider = CreateProvider();
-            provider.ComputeFixesAsync(context).Wait();
+            provider.RegisterCodeFixesAsync(context).Wait();
 
             return builder.ToImmutable();
         }

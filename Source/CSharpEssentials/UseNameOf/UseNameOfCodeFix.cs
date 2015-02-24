@@ -4,23 +4,22 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-//using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace CSharpEssentials.UseNameOf
 {
-    [ExportCodeFixProvider("Use NameOf", LanguageNames.CSharp)]
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = "Use NameOf")]
     internal class UseNameOfCodeFix : CodeFixProvider
     {
-        public override async Task ComputeFixesAsync(CodeFixContext context)
+        public override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var root = await context.Document.GetSyntaxRootAsync(CancellationToken.None);
 
             var literalExpression = root.FindNode(context.Span, getInnermostNodeForTie: true) as LiteralExpressionSyntax;
             if (literalExpression != null)
             {
-                context.RegisterFix(
+                context.RegisterCodeFix(
                     CodeAction.Create("Use NameOf", c => ReplaceWithNameOf(context.Document, literalExpression, c)),
                     context.Diagnostics);
             }
@@ -30,15 +29,10 @@ namespace CSharpEssentials.UseNameOf
         {
             var stringText = literalExpression.Token.ValueText;
 
-            //var nameOfExpression = InvocationExpression(
-            //    expression: IdentifierName("nameof"),
-            //    argumentList: ArgumentList(
-            //        arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
-
-            var nameOfExpression = SyntaxFactory.InvocationExpression(
-                expression: SyntaxFactory.IdentifierName("nameof"),
-                argumentList: SyntaxFactory.ArgumentList(
-                    arguments: SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.IdentifierName(stringText)))));
+			var nameOfExpression = InvocationExpression(
+				expression: IdentifierName("nameof"),
+				argumentList: ArgumentList(
+					arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(literalExpression, nameOfExpression);
@@ -46,7 +40,7 @@ namespace CSharpEssentials.UseNameOf
             return document.WithSyntaxRoot(newRoot);
         }
 
-        public override ImmutableArray<string> GetFixableDiagnosticIds() => ImmutableArray.Create(DiagnosticIds.UseNameOf);
+        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DiagnosticIds.UseNameOf);
 
         public override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
     }

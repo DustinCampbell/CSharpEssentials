@@ -24,7 +24,7 @@ namespace CSharpEssentials
 
         public static BaseParameterListSyntax GetParameterList(this SyntaxNode node)
         {
-            switch (node?.CSharpKind())
+            switch (node?.Kind())
             {
                 case SyntaxKind.MethodDeclaration:
                     return ((MethodDeclarationSyntax)node).ParameterList;

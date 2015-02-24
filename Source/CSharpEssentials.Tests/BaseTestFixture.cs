@@ -52,7 +52,7 @@ namespace CSharpEssentials.Tests
 
         protected Document GetDocument(string code)
         {
-            return new CustomWorkspace()
+            return new AdhocWorkspace()
                 .AddProject("TestProject", LanguageNames.CSharp)
                 .AddMetadataReference(MetadataReference.CreateFromAssembly(typeof(object).Assembly))
                 .AddMetadataReference(MetadataReference.CreateFromAssembly(typeof(Enumerable).Assembly))

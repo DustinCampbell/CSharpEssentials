@@ -8,12 +8,12 @@ using Microsoft.CodeAnalysis.Formatting;
 
 namespace CSharpEssentials.GetterOnlyAutoProperty
 {
-    [ExportCodeFixProvider("Use Getter-only Auto-property", LanguageNames.CSharp)]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "Use Getter-only Auto-property")]
     internal class UseGetterOnlyAutoPropertyCodeFix : CodeFixProvider
     {
-        public override Task ComputeFixesAsync(CodeFixContext context)
+        public override Task RegisterCodeFixesAsync(CodeFixContext context)
         {
-            context.RegisterFix(
+            context.RegisterCodeFix(
                 CodeAction.Create("Use getter-only auto property", c => RemoveAccessor(context)),
                 context.Diagnostics);
 
@@ -40,7 +40,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             return context.Document.WithSyntaxRoot(newRoot);
         }
 
-        public override ImmutableArray<string> GetFixableDiagnosticIds() => ImmutableArray.Create(DiagnosticIds.UseGetterOnlyAutoProperty);
+        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DiagnosticIds.UseGetterOnlyAutoProperty);
 
         public override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
     }
