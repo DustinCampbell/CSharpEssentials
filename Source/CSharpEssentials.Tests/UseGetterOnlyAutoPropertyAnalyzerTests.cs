@@ -26,6 +26,26 @@ class C
         }
 
         [Test]
+        public void AutoPropDeclaredAndUsedInMethodInPartialType()
+        {
+            const string code = @"
+partial class C
+{
+    public int MyProperty { get; private set; }
+}
+
+partial class C
+{
+    public void M()
+    {
+        MyProperty = 0;
+    }
+}";
+
+            NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
         public void AutoPropAlreadyReadonly()
         {
             const string code = @"
