@@ -90,7 +90,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             foreach (var property in allProperties)
             {
                 var propertySymbol = (IPropertySymbol)property;
-                if (!propertySymbol.IsReadOnly)
+                if (!propertySymbol.IsReadOnly && propertySymbol.ExplicitInterfaceImplementations.IsDefaultOrEmpty)
                 {
                     var setMethod = propertySymbol.SetMethod;
                     if (setMethod != null && setMethod.DeclaredAccessibility == Accessibility.Private)

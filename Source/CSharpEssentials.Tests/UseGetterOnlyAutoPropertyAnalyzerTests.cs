@@ -46,6 +46,23 @@ partial class C
         }
 
         [Test]
+        public void AutoPropInInterfaceUsedExplicitly()
+        {
+            const string code = @"
+interface I
+{
+    int Prop { get; set; }
+}
+
+class C : I
+{
+    int I.Prop { get; set; }
+}";
+
+            NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
         public void AutoPropAlreadyReadonly()
         {
             const string code = @"
