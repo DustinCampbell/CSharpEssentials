@@ -26,6 +26,26 @@ class C
         }
 
         [Test]
+        public void AutoPropWrittenInConstructorInPartialClassCanBeReadonly()
+        {
+            const string code = @"
+partial class C
+{
+    public int MyProperty { get; [|private set;|] }
+}
+
+partial class C
+{
+    public C()
+    {
+        MyProperty = 0;
+    }
+}";
+
+            HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
         public void AutoPropDeclaredAndUsedInMethodInPartialType()
         {
             const string code = @"
@@ -196,6 +216,48 @@ class C
 }";
 
             NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
+        public void AutoPropUsedInMultipleConstructorsCanBeReadonly()
+        {
+            const string code = @"
+class C
+{
+    public bool MyProperty { get; [|private set;|] }
+    public C()
+    {
+        MyProperty = false;
+    }
+
+    public (bool b)
+    {
+        MyProperty = b;
+    }
+}";
+
+            HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
+        public void AutoPropWrittenInConstructorReadInAnotherMethodCanBeReadonly()
+        {
+            const string code = @"
+class C
+{
+    public bool MyProperty { get; [|private set;|] }
+    public C()
+    {
+        MyProperty = false;
+    }
+
+    bool NotProp()
+    {
+        return !MyProperty;
+    }
+}";
+
+            HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
         }
     }
 }
