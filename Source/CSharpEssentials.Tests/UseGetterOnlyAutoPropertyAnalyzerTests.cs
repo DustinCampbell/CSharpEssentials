@@ -276,5 +276,23 @@ class C
 
             HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
         }
+
+        [Test]
+        public void AutoPropUsedInLambdaInConstructorCannotBeReadonly()
+        {
+            const string code = @"
+class C
+{
+    public int P { get; private set; }
+
+    public C()
+    {
+        var f = new Action(() => P = 2);
+    }
+}";
+
+            NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
     }
 }

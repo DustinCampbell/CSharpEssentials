@@ -173,6 +173,12 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                         var constructorSymbol = semanticModel.GetDeclaredSymbol(node, cancellationToken);
                         return constructorSymbol != null && (object)constructorSymbol.ContainingType == type;
 
+                    // If it's in a lambda expression, even if in a constructor, then it counts as a
+                    // non-constructor case.
+                    case SyntaxKind.SimpleLambdaExpression:
+                    case SyntaxKind.ParenthesizedLambdaExpression:
+                        return false;
+
                     // Early out cases. There are many others, but these are the common ones.
                     case SyntaxKind.ClassDeclaration:
                     case SyntaxKind.StructDeclaration:
