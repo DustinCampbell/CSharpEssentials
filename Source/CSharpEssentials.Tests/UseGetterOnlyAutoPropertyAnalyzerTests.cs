@@ -163,6 +163,24 @@ class C
         }
 
         [Test]
+        public void AutoPropReferencedButNotAssignedInCompoundAssignment()
+        {
+            System.Diagnostics.Debug.Assert(false);
+            const string code = @"
+class C
+{
+    public int MyProperty { get; [|private set;|] }
+    public void Method()
+    {
+        int x = 0;
+        x += MyProperty;
+    }
+}";
+
+            HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
         public void AutoPropDeclaredAndAssignedViaRightShiftAssignment()
         {
             const string code = @"

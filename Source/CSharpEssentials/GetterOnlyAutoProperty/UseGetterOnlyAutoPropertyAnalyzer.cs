@@ -96,11 +96,15 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                     if (setMethod != null && setMethod.DeclaredAccessibility == Accessibility.Private)
                     {
                         // Find the syntax for the setter.
-                        var declaration = setMethod.DeclaringSyntaxReferences.FirstOrDefault().GetSyntax(cancellationToken) as AccessorDeclarationSyntax;
-                        if (declaration != null && declaration.Body == null)
+                        var reference = setMethod.DeclaringSyntaxReferences.FirstOrDefault();
+                        if (reference != null)
                         {
-                            // An empty body indicates it's an auto-prop
-                            (candidates ?? (candidates = new HashSet<ISymbol>())).Add(propertySymbol);
+                            var declaration = reference.GetSyntax(cancellationToken) as AccessorDeclarationSyntax;
+                            if (declaration != null && declaration.Body == null)
+                            {
+                                // An empty body indicates it's an auto-prop
+                                (candidates ?? (candidates = new HashSet<ISymbol>())).Add(propertySymbol);
+                            }
                         }
                     }
                 }
@@ -131,12 +135,8 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             {
                 switch (node.Kind())
                 {
-                    // Simple assignment
+                    // Simple or compound assignment
                     case SyntaxKind.SimpleAssignmentExpression:
-                        var assignment = (AssignmentExpressionSyntax)node;
-                        return IsDescendant(assignment.Left, identifier);
-
-                    // Implicit assignment
                     case SyntaxKind.OrAssignmentExpression:
                     case SyntaxKind.AndAssignmentExpression:
                     case SyntaxKind.ExclusiveOrAssignmentExpression:
@@ -147,6 +147,8 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                     case SyntaxKind.ModuloAssignmentExpression:
                     case SyntaxKind.LeftShiftAssignmentExpression:
                     case SyntaxKind.RightShiftAssignmentExpression:
+                        var assignment = (AssignmentExpressionSyntax)node;
+                        return IsDescendant(assignment.Left, identifier);
 
                     // Prefix unary expression
                     case SyntaxKind.PreIncrementExpression:
