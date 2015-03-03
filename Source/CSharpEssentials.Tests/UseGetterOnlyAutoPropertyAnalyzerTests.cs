@@ -165,7 +165,6 @@ class C
         [Test]
         public void AutoPropReferencedButNotAssignedInCompoundAssignment()
         {
-            System.Diagnostics.Debug.Assert(false);
             const string code = @"
 class C
 {

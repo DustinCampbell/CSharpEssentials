@@ -52,7 +52,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                         var property = model.GetSymbolInfo(node, context.CancellationToken).Symbol;
                         if (property?.Kind == SymbolKind.Property &&
                             candidates.Contains(property) &&
-                            IsIdentifierWithinAnAssignmentButNotInAConstructor(node, type, model, context.CancellationToken))
+                            IsIdentifierWithinAnAssignmentButNotInAConstructor(node, property, model, context.CancellationToken))
                         {
                             if (candidates.Remove(property) && candidates.Count == 0)
                             {
@@ -70,16 +70,22 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             }
         }
 
-        private static bool IsIdentifierWithinAnAssignmentButNotInAConstructor(SyntaxNode identifier, INamedTypeSymbol containingType, SemanticModel semanticModel, CancellationToken cancellationToken)
+        private static bool IsIdentifierWithinAnAssignmentButNotInAConstructor(
+            SyntaxNode identifier,
+            ISymbol identifierSymbol,
+            SemanticModel semanticModel,
+            CancellationToken cancellationToken)
         {
             // Is the property being updated but not within the constructor?
-            var node = identifier;
-            if (!IsUpdatingExpression(ref node))
+            var updatingExpression = UpdatingExpression(identifier);
+            if (updatingExpression == null)
             {
                 return false;
             }
 
-            return !IsWithinConstructorOf(node.Parent, containingType, semanticModel, cancellationToken);
+            // Is this an assignment to the property that is not within a constructor (for the identifier's containing type)?
+            var updatedSymbol = semanticModel.GetSymbolInfo(updatingExpression, cancellationToken).Symbol;
+            return updatedSymbol == identifierSymbol && !IsWithinConstructorOf(updatingExpression.Parent, identifierSymbol.ContainingType, semanticModel, cancellationToken);
         }
 
         private static HashSet<ISymbol> GetAutoPropsWithPrivateSetters(INamedTypeSymbol type, CancellationToken cancellationToken)
@@ -113,22 +119,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             return candidates;
         }
 
-        private static bool IsDescendant(SyntaxNode root, SyntaxNode node)
-        {
-            while (node != null)
-            {
-                if (node == root)
-                {
-                    return true;
-                }
-
-                node = node.Parent;
-            }
-
-            return false;
-        }
-
-        private static bool IsUpdatingExpression(ref SyntaxNode node)
+        private static SyntaxNode UpdatingExpression(SyntaxNode node)
         {
             var identifier = node;
             for (node = node.Parent; node != null; node = node.Parent)
@@ -148,25 +139,26 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                     case SyntaxKind.LeftShiftAssignmentExpression:
                     case SyntaxKind.RightShiftAssignmentExpression:
                         var assignment = (AssignmentExpressionSyntax)node;
-                        return IsDescendant(assignment.Left, identifier);
+                        return assignment.Left;
 
                     // Prefix unary expression
                     case SyntaxKind.PreIncrementExpression:
                     case SyntaxKind.PreDecrementExpression:
+                        return ((PrefixUnaryExpressionSyntax)node).Operand;
 
                     // Postfix unary expression
                     case SyntaxKind.PostIncrementExpression:
                     case SyntaxKind.PostDecrementExpression:
-                        return true;
+                        return ((PostfixUnaryExpressionSyntax)node).Operand;
 
                     // Early loop termination
                     case SyntaxKind.Block:
                     case SyntaxKind.ExpressionStatement:
-                        return false;
+                        return null;
                 }
             }
 
-            return false;
+            return null;
         }
 
         private static bool IsWithinConstructorOf(SyntaxNode node, INamedTypeSymbol type, SemanticModel semanticModel, CancellationToken cancellationToken)
@@ -198,15 +190,13 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             foreach (var reference in symbol.DeclaringSyntaxReferences)
             {
                 // The span should be on the setter, but the symbol is for the whole property declaration.
-                var declarationNode = reference.GetSyntax(cancellationToken) as PropertyDeclarationSyntax;
-                foreach (var accessor in declarationNode.AccessorList.Accessors)
+                var property = (PropertyDeclarationSyntax)reference.GetSyntax(cancellationToken);
+                var setter = property.AccessorList.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.SetAccessorDeclaration));
+                if (setter != null)
                 {
-                    if (accessor.IsKind(SyntaxKind.SetAccessorDeclaration))
-                    {
-                        return Diagnostic.Create(
-                                DiagnosticDescriptors.UseGetterOnlyAutoProperty,
-                                accessor.GetLocation());
-                    }
+                    return Diagnostic.Create(
+                            DiagnosticDescriptors.UseGetterOnlyAutoProperty,
+                            setter.GetLocation());
                 }
             }
 
