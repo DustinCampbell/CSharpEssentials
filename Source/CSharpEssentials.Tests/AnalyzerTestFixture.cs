@@ -18,7 +18,7 @@ namespace CSharpEssentials.Tests
 
             var diagnostics = GetDiagnostics(document);
 
-            Assert.That(diagnostics.All(d => d.Id == diagnosticId), Is.True);
+            Assert.That(diagnostics.Any(d => d.Id == diagnosticId), Is.False);
         }
 
         protected void HasDiagnostic(string markupCode, string diagnosticId)

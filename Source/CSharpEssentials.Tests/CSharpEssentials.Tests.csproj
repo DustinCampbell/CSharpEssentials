@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseExpressionBodiedMemberAnalyzerTests.cs" />
     <Compile Include="UseExpressionBodiedMemberCodeFixTests.cs" />
+    <Compile Include="UseGetterOnlyAutoPropertyAnalyzerTests.cs" />
+    <Compile Include="UseGetterOnlyAutoPropertyCodeFixTests.cs" />
     <Compile Include="UseNameOfAnalyzerTests.cs" />
   </ItemGroup>
   <ItemGroup>
