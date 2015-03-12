@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
 using System;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Threading;
 
 namespace CSharpEssentials.Tests
@@ -24,21 +23,7 @@ namespace CSharpEssentials.Tests
 
             Assert.That(codeRefactorings.Length, Is.EqualTo(1));
 
-            var codeRefactoring = codeRefactorings[0];
-            var operations = codeRefactoring.GetOperationsAsync(CancellationToken.None).Result;
-
-            Assert.That(operations.Count(), Is.EqualTo(1));
-
-            var operation = operations.Single();
-            var workspace = document.Project.Solution.Workspace;
-            operation.Apply(workspace, CancellationToken.None);
-
-            var newDocument = workspace.CurrentSolution.GetDocument(document.Id);
-
-            var sourceText = newDocument.GetTextAsync(CancellationToken.None).Result;
-            var text = sourceText.ToString();
-
-            Assert.That(text, Is.EqualTo(expected));
+            VerifyCodeAction(codeRefactorings[0], document, expected);
         }
 
         private ImmutableArray<CodeAction> GetCodeRefactorings(Document document, TextSpan span)
