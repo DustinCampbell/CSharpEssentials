@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using System.Collections.Immutable;
+using System.Threading;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
-using System;
-using System.Collections.Immutable;
-using System.Threading;
 
 namespace CSharpEssentials.Tests
 {

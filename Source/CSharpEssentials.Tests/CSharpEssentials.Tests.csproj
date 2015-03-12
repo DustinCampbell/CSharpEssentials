@@ -68,6 +68,7 @@
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="CodeFixTestFixture.cs" />
     <Compile Include="CodeRefactoringTestFixture.cs" />
+    <Compile Include="ConvertToInterpolatedString\ConvertToInterpolatedStringRefactoringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseExpressionBodiedMember\UseExpressionBodiedMemberAnalyzerTests.cs" />
     <Compile Include="UseExpressionBodiedMember\UseExpressionBodiedMemberCodeFixTests.cs" />

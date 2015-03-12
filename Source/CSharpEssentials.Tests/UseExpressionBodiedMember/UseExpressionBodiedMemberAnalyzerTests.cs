@@ -1,6 +1,6 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using CSharpEssentials.UseExpressionBodiedMember;
+using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
-using CSharpEssentials.UseExpressionBodiedMember;
 
 namespace CSharpEssentials.Tests.UseExpressionBodiedMember
 {
