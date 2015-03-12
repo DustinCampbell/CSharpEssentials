@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.UseNameOf
 {
     [TestFixture]
     public class UseNameOfAnalyzerTests : AnalyzerTestFixture

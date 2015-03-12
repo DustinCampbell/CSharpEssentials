@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CodeFixes;
 using NUnit.Framework;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.UseExpressionBodiedMember
 {
     [TestFixture]
     public class UseExpressionBodiedMemberCodeFixTests : CodeFixTestFixture

@@ -69,11 +69,11 @@
     <Compile Include="CodeFixTestFixture.cs" />
     <Compile Include="CodeRefactoringTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UseExpressionBodiedMemberAnalyzerTests.cs" />
-    <Compile Include="UseExpressionBodiedMemberCodeFixTests.cs" />
-    <Compile Include="UseGetterOnlyAutoPropertyAnalyzerTests.cs" />
-    <Compile Include="UseGetterOnlyAutoPropertyCodeFixTests.cs" />
-    <Compile Include="UseNameOfAnalyzerTests.cs" />
+    <Compile Include="UseExpressionBodiedMember\UseExpressionBodiedMemberAnalyzerTests.cs" />
+    <Compile Include="UseExpressionBodiedMember\UseExpressionBodiedMemberCodeFixTests.cs" />
+    <Compile Include="GetterOnlyAutoProperty\UseGetterOnlyAutoPropertyAnalyzerTests.cs" />
+    <Compile Include="GetterOnlyAutoProperty\UseGetterOnlyAutoPropertyCodeFixTests.cs" />
+    <Compile Include="UseNameOf\UseNameOfAnalyzerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

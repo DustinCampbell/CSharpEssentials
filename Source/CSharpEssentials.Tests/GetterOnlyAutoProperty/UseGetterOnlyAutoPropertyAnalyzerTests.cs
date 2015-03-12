@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.GetterOnlyAutoProperty
 {
     [TestFixture]
     public class UseGetterOnlyAutoPropertyAnalyzerTests : AnalyzerTestFixture

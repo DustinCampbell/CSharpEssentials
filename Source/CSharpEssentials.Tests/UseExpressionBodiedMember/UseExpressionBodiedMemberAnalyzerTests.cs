@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using CSharpEssentials.UseExpressionBodiedMember;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.UseExpressionBodiedMember
 {
     [TestFixture]
     public class UseExpressionBodiedMemberAnalyzerTests : AnalyzerTestFixture
