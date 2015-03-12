@@ -31,6 +31,77 @@ class C
         var s = $""{42}"";
     }
 }";
+        }
+
+        [Test]
+        public void FormatClause()
+        {
+            const string markupCode = @"
+class C
+{
+    void M()
+    {
+        var s = [|string.Format(""{0:x}"", 42)|];
+    }
+}";
+
+            const string expected = @"
+class C
+{
+    void M()
+    {
+        var s = $""{42:x}"";
+    }
+}";
+
+            TestCodeRefactoring(markupCode, expected);
+        }
+
+        [Test]
+        [Ignore("Not working yet - awaiting Roslyn build with https://github.com/dotnet/roslyn/pull/731")]
+        public void ConditionalExpression()
+        {
+            const string markupCode = @"
+class C
+{
+    void M()
+    {
+        var s = [|string.Format(""{0}"", 42 == 42 ? true : false)|];
+    }
+}";
+
+            const string expected = @"
+class C
+{
+    void M()
+    {
+        var s = $""{(42 == 42 ? true : false)}"";
+    }
+}";
+
+            TestCodeRefactoring(markupCode, expected);
+        }
+
+        [Test]
+        public void ConditionalExpressionAndFormatClause()
+        {
+            const string markupCode = @"
+class C
+{
+    void M()
+    {
+        var s = [|string.Format(""{0:x}"", 42 == 42 ? true : false)|];
+    }
+}";
+
+            const string expected = @"
+class C
+{
+    void M()
+    {
+        var s = $""{(42 == 42 ? true : false):x}"";
+    }
+}";
 
             TestCodeRefactoring(markupCode, expected);
         }

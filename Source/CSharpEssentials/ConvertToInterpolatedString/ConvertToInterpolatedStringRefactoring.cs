@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Simplification;
 using static System.Diagnostics.Debug;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace CSharpEssentials.ConvertToInterpolatedString
 {
@@ -80,7 +81,7 @@ namespace CSharpEssentials.ConvertToInterpolatedString
             var builder = ImmutableArray.CreateBuilder<ExpressionSyntax>();
             for (int i = 1; i < arguments.Count; i++)
             {
-                builder.Add(await Simplifier.ExpandAsync(arguments[i].Expression, document, expandParameter: true, cancellationToken: cancellationToken));
+                builder.Add(CastAndParenthesize(arguments[i].Expression, semanticModel));
             }
 
             var expandedArguments = builder.ToImmutable();
@@ -93,6 +94,37 @@ namespace CSharpEssentials.ConvertToInterpolatedString
             var newRoot = root.ReplaceNode(invocation, newInterpolatedString);
 
             return document.WithSyntaxRoot(newRoot);
+        }
+
+        private static ExpressionSyntax Parenthesize(ExpressionSyntax expression)
+        {
+            return expression.IsKind(SyntaxKind.ParenthesizedExpression)
+                ? expression
+                : ParenthesizedExpression(
+                    openParenToken: Token(SyntaxTriviaList.Empty, SyntaxKind.OpenParenToken, SyntaxTriviaList.Empty),
+                    expression: expression,
+                    closeParenToken: Token(SyntaxTriviaList.Empty, SyntaxKind.CloseParenToken, SyntaxTriviaList.Empty))
+                    .WithAdditionalAnnotations(Simplifier.Annotation);
+        }
+
+        private static ExpressionSyntax Cast(ExpressionSyntax expression, ITypeSymbol targetType)
+        {
+            if (targetType == null)
+            {
+                return expression;
+            }
+
+            var type = ParseTypeName(targetType.ToDisplayString());
+
+            return CastExpression(type, Parenthesize(expression))
+                .WithAdditionalAnnotations(Simplifier.Annotation);
+        }
+
+        private static ExpressionSyntax CastAndParenthesize(ExpressionSyntax expression, SemanticModel semanticModel)
+        {
+            var targetType = semanticModel.GetTypeInfo(expression).ConvertedType;
+
+            return Parenthesize(Cast(expression, targetType));
         }
 
         private static bool IsValidStringFormatMethod(ISymbol symbol)
