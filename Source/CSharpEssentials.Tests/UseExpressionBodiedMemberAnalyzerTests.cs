@@ -7,10 +7,7 @@ namespace CSharpEssentials.Tests
     [TestFixture]
     public class UseExpressionBodiedMemberAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer()
-        {
-            return new UseExpressionBodiedMemberAnalyzer();
-        }
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseExpressionBodiedMemberAnalyzer();
 
         [Test]
         public void NoDiagnosticWhenThereIsAnAttributeOnAnAccessor()

@@ -7,7 +7,7 @@ namespace CSharpEssentials.Tests
     [TestFixture]
     public class UseGetterOnlyAutoPropertyCodeFixTests : CodeFixTestFixture
     {
-        public override CodeFixProvider CreateProvider() => new UseGetterOnlyAutoPropertyCodeFix();
+        protected override CodeFixProvider CreateProvider() => new UseGetterOnlyAutoPropertyCodeFix();
 
         [Test]
         public void TestSimpleProperty()

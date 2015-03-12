@@ -10,7 +10,7 @@ namespace CSharpEssentials.Tests
 {
     public abstract class AnalyzerTestFixture : BaseTestFixture
     {
-        public abstract DiagnosticAnalyzer CreateAnalyzer();
+        protected abstract DiagnosticAnalyzer CreateAnalyzer();
 
         protected void NoDiagnostic(string code, string diagnosticId)
         {

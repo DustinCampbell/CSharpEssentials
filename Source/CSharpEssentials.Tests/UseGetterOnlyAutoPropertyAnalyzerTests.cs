@@ -7,7 +7,7 @@ namespace CSharpEssentials.Tests
     [TestFixture]
     public class UseGetterOnlyAutoPropertyAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer() => new UseGetterOnlyAutoPropertyAnalyzer();
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseGetterOnlyAutoPropertyAnalyzer();
 
         [Test]
         public void AutoPropDeclaredAndUsedInConstructor()

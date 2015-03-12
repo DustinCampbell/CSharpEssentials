@@ -7,10 +7,7 @@ namespace CSharpEssentials.Tests
     [TestFixture]
     public class UseExpressionBodiedMemberCodeFixTests : CodeFixTestFixture
     {
-        public override CodeFixProvider CreateProvider()
-        {
-            return new UseExpressionBodiedMemberCodeFix();
-        }
+        protected override CodeFixProvider CreateProvider() => new UseExpressionBodiedMemberCodeFix();
 
         [Test]
         public void TestSimpleProperty()

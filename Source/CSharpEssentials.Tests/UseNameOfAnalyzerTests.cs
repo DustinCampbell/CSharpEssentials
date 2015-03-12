@@ -7,10 +7,7 @@ namespace CSharpEssentials.Tests
     [TestFixture]
     public class UseNameOfAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer()
-        {
-            return new UseNameOfAnalyzer();
-        }
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseNameOfAnalyzer();
 
         [Test]
         public void NoDiagnosticWhenThereAreNoArguments()

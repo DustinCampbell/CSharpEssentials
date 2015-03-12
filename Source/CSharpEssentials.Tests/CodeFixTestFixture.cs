@@ -12,7 +12,7 @@ namespace CSharpEssentials.Tests
 {
     public abstract class CodeFixTestFixture : BaseTestFixture
     {
-        public abstract CodeFixProvider CreateProvider();
+        protected abstract CodeFixProvider CreateProvider();
 
         protected void TestCodeFix(string markupCode, string expected, DiagnosticDescriptor descriptor)
         {
