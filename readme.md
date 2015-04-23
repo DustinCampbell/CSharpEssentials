@@ -35,3 +35,5 @@ member.
 This handy refactoring makes it a breeze to transform a ```String.Format```
 call into an interpolated strings.
 
+![](http://i.imgur.com/Q1CMKD5.jpg)
+
