@@ -2,15 +2,12 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.UseNameOf
 {
     [TestFixture]
     public class UseNameOfAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer()
-        {
-            return new UseNameOfAnalyzer();
-        }
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseNameOfAnalyzer();
 
         [Test]
         public void NoDiagnosticWhenThereAreNoArguments()

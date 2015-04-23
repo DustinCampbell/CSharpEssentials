@@ -2,12 +2,12 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.GetterOnlyAutoProperty
 {
     [TestFixture]
     public class UseGetterOnlyAutoPropertyAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer() => new UseGetterOnlyAutoPropertyAnalyzer();
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseGetterOnlyAutoPropertyAnalyzer();
 
         [Test]
         public void AutoPropDeclaredAndUsedInConstructor()

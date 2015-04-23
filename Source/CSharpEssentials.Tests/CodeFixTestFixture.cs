@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -12,7 +11,7 @@ namespace CSharpEssentials.Tests
 {
     public abstract class CodeFixTestFixture : BaseTestFixture
     {
-        public abstract CodeFixProvider CreateProvider();
+        protected abstract CodeFixProvider CreateProvider();
 
         protected void TestCodeFix(string markupCode, string expected, DiagnosticDescriptor descriptor)
         {
@@ -24,21 +23,7 @@ namespace CSharpEssentials.Tests
 
             Assert.That(codeFixes.Length, Is.EqualTo(1));
 
-            var codeFix = codeFixes[0];
-            var operations = codeFix.GetOperationsAsync(CancellationToken.None).Result;
-
-            Assert.That(operations.Count(), Is.EqualTo(1));
-
-            var operation = operations.Single();
-            var workspace = document.Project.Solution.Workspace;
-            operation.Apply(workspace, CancellationToken.None);
-
-            var newDocument = workspace.CurrentSolution.GetDocument(document.Id);
-
-            var sourceText = newDocument.GetTextAsync(CancellationToken.None).Result;
-            var text = sourceText.ToString();
-
-            Assert.That(text, Is.EqualTo(expected));
+            VerifyCodeAction(codeFixes[0], document, expected);
         }
 
         private ImmutableArray<CodeAction> GetCodeFixes(Document document, TextSpan span, DiagnosticDescriptor descriptor)

@@ -9,7 +9,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace CSharpEssentials.UseNameOf
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = "Use NameOf")]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = "Use NameOf")]
     internal class UseNameOfCodeFix : CodeFixProvider
     {
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -29,10 +29,10 @@ namespace CSharpEssentials.UseNameOf
         {
             var stringText = literalExpression.Token.ValueText;
 
-			var nameOfExpression = InvocationExpression(
-				expression: IdentifierName("nameof"),
-				argumentList: ArgumentList(
-					arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
+            var nameOfExpression = InvocationExpression(
+                expression: IdentifierName("nameof"),
+                argumentList: ArgumentList(
+                    arguments: SingletonSeparatedList(Argument(IdentifierName(stringText)))));
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
             var newRoot = root.ReplaceNode(literalExpression, nameOfExpression);

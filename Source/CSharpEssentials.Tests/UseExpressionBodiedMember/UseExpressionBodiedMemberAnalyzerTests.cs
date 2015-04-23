@@ -1,16 +1,13 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using CSharpEssentials.UseExpressionBodiedMember;
+using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
-using CSharpEssentials.UseExpressionBodiedMember;
 
-namespace CSharpEssentials.Tests
+namespace CSharpEssentials.Tests.UseExpressionBodiedMember
 {
     [TestFixture]
     public class UseExpressionBodiedMemberAnalyzerTests : AnalyzerTestFixture
     {
-        public override DiagnosticAnalyzer CreateAnalyzer()
-        {
-            return new UseExpressionBodiedMemberAnalyzer();
-        }
+        protected override DiagnosticAnalyzer CreateAnalyzer() => new UseExpressionBodiedMemberAnalyzer();
 
         [Test]
         public void NoDiagnosticWhenThereIsAnAttributeOnAnAccessor()
