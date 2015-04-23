@@ -1,11 +1,13 @@
 # C# Essentials
 
-C# Essentials is a collection of diagnostic analyzers, code fixes and
+C# Essentials is a collection of Roslyn diagnostic analyzers, code fixes and
 refactorings that make it easy to work with C# 6 language features,
 such as [nameof expressions](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#nameof-expressions),
 [getter-only auto-properties](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#getter-only-auto-properties),
 [expression-bodied members](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#expression-bodied-function-members),
 and [string interpolation](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#string-interpolation).
+
+Supports Visual Studio 2015
 
 ## Features
 
