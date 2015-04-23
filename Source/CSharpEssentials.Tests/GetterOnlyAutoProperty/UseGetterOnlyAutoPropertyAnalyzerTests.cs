@@ -1,12 +1,15 @@
 ﻿using CSharpEssentials.GetterOnlyAutoProperty;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
+using RoslynNUnitLight;
 
 namespace CSharpEssentials.Tests.GetterOnlyAutoProperty
 {
     [TestFixture]
     public class UseGetterOnlyAutoPropertyAnalyzerTests : AnalyzerTestFixture
     {
+        protected override string LanguageName => LanguageNames.CSharp;
         protected override DiagnosticAnalyzer CreateAnalyzer() => new UseGetterOnlyAutoPropertyAnalyzer();
 
         [Test]

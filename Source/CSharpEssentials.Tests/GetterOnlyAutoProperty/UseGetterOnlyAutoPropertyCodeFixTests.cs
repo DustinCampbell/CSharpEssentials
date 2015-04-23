@@ -1,12 +1,15 @@
 ﻿using CSharpEssentials.GetterOnlyAutoProperty;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using NUnit.Framework;
+using RoslynNUnitLight;
 
 namespace CSharpEssentials.Tests.GetterOnlyAutoProperty
 {
     [TestFixture]
     public class UseGetterOnlyAutoPropertyCodeFixTests : CodeFixTestFixture
     {
+        protected override string LanguageName => LanguageNames.CSharp;
         protected override CodeFixProvider CreateProvider() => new UseGetterOnlyAutoPropertyCodeFix();
 
         [Test]

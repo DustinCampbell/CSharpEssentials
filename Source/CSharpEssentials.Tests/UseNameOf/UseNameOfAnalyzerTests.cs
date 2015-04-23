@@ -1,12 +1,15 @@
 ﻿using CSharpEssentials.UseNameOf;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
+using RoslynNUnitLight;
 
 namespace CSharpEssentials.Tests.UseNameOf
 {
     [TestFixture]
     public class UseNameOfAnalyzerTests : AnalyzerTestFixture
     {
+        protected override string LanguageName => LanguageNames.CSharp;
         protected override DiagnosticAnalyzer CreateAnalyzer() => new UseNameOfAnalyzer();
 
         [Test]

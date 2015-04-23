@@ -1,15 +1,15 @@
 ﻿using CSharpEssentials.ConvertToInterpolatedString;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using NUnit.Framework;
+using RoslynNUnitLight;
 
 namespace CSharpEssentials.Tests.ConvertToInterpolatedString
 {
     public class ConvertToInterpolatedStringRefactoringTests : CodeRefactoringTestFixture
     {
-        protected override CodeRefactoringProvider CreateProvider()
-        {
-            return new ConvertToInterpolatedStringRefactoring();
-        }
+        protected override string LanguageName => LanguageNames.CSharp;
+        protected override CodeRefactoringProvider CreateProvider() => new ConvertToInterpolatedStringRefactoring();
 
         [Test]
         public void SimpleTest()

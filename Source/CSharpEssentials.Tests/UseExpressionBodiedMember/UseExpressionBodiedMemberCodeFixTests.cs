@@ -1,12 +1,15 @@
 ﻿using CSharpEssentials.UseExpressionBodiedMember;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using NUnit.Framework;
+using RoslynNUnitLight;
 
 namespace CSharpEssentials.Tests.UseExpressionBodiedMember
 {
     [TestFixture]
     public class UseExpressionBodiedMemberCodeFixTests : CodeFixTestFixture
     {
+        protected override string LanguageName => LanguageNames.CSharp;
         protected override CodeFixProvider CreateProvider() => new UseExpressionBodiedMemberCodeFix();
 
         [Test]
