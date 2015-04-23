@@ -7,7 +7,7 @@ such as [nameof expressions](https://github.com/dotnet/roslyn/wiki/New-Language-
 [expression-bodied members](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#expression-bodied-function-members),
 and [string interpolation](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6#string-interpolation).
 
-Supports Visual Studio 2015
+Supports Visual Studio 2015 ([link](https://visualstudiogallery.msdn.microsoft.com/a4445ad0-f97c-41f9-a148-eae225dcc8a5?SRC=Home))
 
 ## Features
 
