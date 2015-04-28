@@ -100,7 +100,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 			var newDeclaration = declaration
 				.WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
 				.WithAccessorList(null)
-				.WithSemicolon(GetSemicolon(declaration.AccessorList))
+				.WithSemicolonToken(GetSemicolon(declaration.AccessorList))
 				.WithAdditionalAnnotations(Formatter.Annotation);
 
 			var root = await document.GetSyntaxRootAsync(cancellationToken);
@@ -114,7 +114,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 			var newDeclaration = declaration
 				.WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
 				.WithAccessorList(null)
-				.WithSemicolon(GetSemicolon(declaration.AccessorList))
+				.WithSemicolonToken(GetSemicolon(declaration.AccessorList))
 				.WithAdditionalAnnotations(Formatter.Annotation);
 
 			var root = await document.GetSyntaxRootAsync(cancellationToken);
