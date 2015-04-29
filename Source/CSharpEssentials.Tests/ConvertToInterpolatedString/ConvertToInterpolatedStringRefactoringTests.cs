@@ -108,7 +108,6 @@ class C
         }
 
         [Test]
-        [Ignore("Not working yet - awaiting Roslyn build with https://github.com/dotnet/roslyn/pull/731")]
         public void ConditionalExpression()
         {
             const string markupCode = @"
