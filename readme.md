@@ -32,6 +32,14 @@ member.
 
 ![](http://i.imgur.com/vF4PY9o.jpg)
 
+### Expand Expression-Bodied Member
+
+Makes it trivial to convert an expression-bodied member into a full member
+declaration with a body (and a get accessor declaration for properties and
+indexers).
+
+![](http://i.imgur.com/WROjVdP.jpg)
+
 ### Convert to Interpolated String
 
 This handy refactoring makes it a breeze to transform a ```String.Format```
