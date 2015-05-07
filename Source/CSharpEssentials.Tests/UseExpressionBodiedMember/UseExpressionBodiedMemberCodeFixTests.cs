@@ -98,6 +98,52 @@ class C
         }
 
         [Test]
+        public void TestSimpleOperator()
+        {
+            const string markupCode = @"
+class C
+{
+    [|int operator +(C c1, C c2)
+    {
+        return 42;
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    int operator +(C c1, C c2) => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
+
+        [Test]
+        public void TestSimpleConversionOperator()
+        {
+            const string markupCode = @"
+class C
+{
+    [|public static implicit operator int (C c)
+    {
+        return 42;
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    public static implicit operator int (C c) => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
+
+        [Test]
         public void TestMethodWithComment()
         {
             const string markupCode = @"
