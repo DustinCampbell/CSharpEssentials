@@ -66,7 +66,11 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             // Anything left in the candidates set should be reported.
             foreach (var candidate in candidates)
             {
-                context.ReportDiagnostic(CreateDiagnostic(candidate, context.CancellationToken));
+                var diagnostic = CreateDiagnostic(candidate, context.CancellationToken);
+                if (diagnostic != null)
+                {
+                    context.ReportDiagnostic(diagnostic);
+                }
             }
         }
 
@@ -197,12 +201,17 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             {
                 // The span should be on the setter, but the symbol is for the whole property declaration.
                 var property = (PropertyDeclarationSyntax)reference.GetSyntax(cancellationToken);
-                var setter = property.AccessorList.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.SetAccessorDeclaration));
-                if (setter != null)
+
+                // If the property declaration is in generated code, we shouldn't create the diagnostic.
+                if (!property.SyntaxTree.IsGeneratedCode())
                 {
-                    return Diagnostic.Create(
-                            DiagnosticDescriptors.UseGetterOnlyAutoProperty,
-                            setter.GetLocation());
+                    var setter = property.AccessorList.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.SetAccessorDeclaration));
+                    if (setter != null)
+                    {
+                        return Diagnostic.Create(
+                                DiagnosticDescriptors.UseGetterOnlyAutoProperty,
+                                setter.GetLocation());
+                    }
                 }
             }
 

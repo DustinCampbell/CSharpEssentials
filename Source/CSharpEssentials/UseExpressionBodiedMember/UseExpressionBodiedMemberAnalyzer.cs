@@ -23,6 +23,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static void HandleMethodDeclaration(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var methodDecl = (MethodDeclarationSyntax)context.Node;
             if (methodDecl.ExpressionBody != null)
             {
@@ -44,6 +49,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleOperatorDeclaration(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var operatorDecl = (OperatorDeclarationSyntax)context.Node;
             if (operatorDecl.ExpressionBody != null)
             {
@@ -60,6 +70,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleConversionOperatorDeclaration(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var conversionOperatorDecl = (ConversionOperatorDeclarationSyntax)context.Node;
             if (conversionOperatorDecl.ExpressionBody != null)
             {
@@ -76,6 +91,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static void HandlePropertyDeclaration(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var propertyDecl = (PropertyDeclarationSyntax)context.Node;
             if (propertyDecl.ExpressionBody != null)
             {
@@ -92,6 +112,11 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleIndexerDeclaration(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var indexerDecl = (IndexerDeclarationSyntax)context.Node;
             if (indexerDecl.ExpressionBody != null)
             {
