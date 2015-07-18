@@ -110,5 +110,60 @@ class C
 
             HasDiagnostic(code, DiagnosticIds.UseNameOf);
         }
+
+        private void VerifyNotAvailableInGeneratedCode(string filePath)
+        {
+            const string code = @"
+using System;
+class C
+{
+    void M(int x)
+    {
+        throw new ArgumentNullException(""x"");
+    }
+}";
+
+            var document = TestHelpers
+                .GetDocument(code, this.LanguageName)
+                .WithFilePath(filePath);
+
+            NoDiagnostic(document, DiagnosticIds.UseNameOf);
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode1()
+        {
+            VerifyNotAvailableInGeneratedCode("TemporaryGeneratedFile_TestDocument.cs");
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode2()
+        {
+            VerifyNotAvailableInGeneratedCode("AssemblyInfo.cs");
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode3()
+        {
+            VerifyNotAvailableInGeneratedCode("TestDocument.designer.cs");
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode4()
+        {
+            VerifyNotAvailableInGeneratedCode("TestDocument.g.cs");
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode5()
+        {
+            VerifyNotAvailableInGeneratedCode("TestDocument.g.i.cs");
+        }
+
+        [Test]
+        public void NotAvailableInGeneratedCode6()
+        {
+            VerifyNotAvailableInGeneratedCode("TestDocument.AssemblyAttributes.cs");
+        }
     }
 }
