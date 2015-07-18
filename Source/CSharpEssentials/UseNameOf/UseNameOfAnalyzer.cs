@@ -22,6 +22,11 @@ namespace CSharpEssentials.UseNameOf
 
         private static void AnalyzeArgument(SyntaxNodeAnalysisContext context)
         {
+            if (context.Node.SyntaxTree.IsGeneratedCode())
+            {
+                return;
+            }
+
             var argument = (ArgumentSyntax)context.Node;
             var parameters = GetParametersInScope(argument);
             if (!parameters.Any())

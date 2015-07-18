@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace CSharpEssentials
 {
@@ -133,6 +134,43 @@ namespace CSharpEssentials
             }
 
             return default(ArgumentInfo);
+        }
+
+        private static bool IsGeneratedCode(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return false;
+            }
+
+            var fileName = Path.GetFileName(filePath);
+            if (fileName.StartsWith("TemporaryGeneratedFile_", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            var extension = Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+            {
+                return false;
+            }
+
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+            if (fileNameWithoutExtension.EndsWith("AssemblyInfo", StringComparison.OrdinalIgnoreCase) ||
+                fileNameWithoutExtension.EndsWith(".designer", StringComparison.OrdinalIgnoreCase) ||
+                fileNameWithoutExtension.EndsWith(".g", StringComparison.OrdinalIgnoreCase) ||
+                fileNameWithoutExtension.EndsWith(".g.i", StringComparison.OrdinalIgnoreCase) ||
+                fileNameWithoutExtension.EndsWith(".AssemblyAttributes", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsGeneratedCode(this SyntaxTree tree)
+        {
+            return IsGeneratedCode(tree.FilePath);
         }
     }
 }
