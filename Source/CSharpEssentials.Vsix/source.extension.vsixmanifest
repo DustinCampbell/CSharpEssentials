@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="CSharpEssentials.b317d43c-08cc-4eb2-8035-414864fda0cb" Version="1.0.1" Language="en-US" Publisher="Dustin Campbell"/>
+    <Identity Id="CSharpEssentials.b317d43c-08cc-4eb2-8035-414864fda0cb" Version="1.0.2" Language="en-US" Publisher="Dustin Campbell"/>
     <DisplayName>C# Essentials</DisplayName>
-    <Description xml:space="preserve">A collection of Roslyn diagnostics and code fixes to support C# 6 language features.</Description>
+    <Description xml:space="preserve">A collection of Roslyn diagnostics, code fixes and refactorings to support C# 6 language features.</Description>
     <License>License.rtf</License>
   </Metadata>
   <Installation>
