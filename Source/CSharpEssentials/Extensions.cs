@@ -4,7 +4,6 @@ using System.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace CSharpEssentials
 {
@@ -58,12 +57,12 @@ namespace CSharpEssentials
         {
             if (semanticModel == null)
             {
-                throw new ArgumentNullException("semanticModel");
+                throw new ArgumentNullException(nameof(semanticModel));
             }
 
             if (argument == null)
             {
-                throw new ArgumentNullException("argument");
+                throw new ArgumentNullException(nameof(argument));
             }
 
             var argumentList = argument.Parent as ArgumentListSyntax;
