@@ -165,5 +165,115 @@ class C
 
             TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
         }
+
+        [Test]
+        public void TestMethodWithCommentBeforeReturn()
+        {
+            const string markupCode = @"
+class C
+{
+    [|int M()
+    {
+        // comment
+        return 42;
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    // comment
+    int M() => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
+
+        [Test]
+        public void TestMethodWithCommentBeforeReturnAndXmlDocComment()
+        {
+            const string markupCode = @"
+class C
+{
+    /// <summary>Hello!</summary>
+    [|int M()
+    {
+        // comment
+        return 42;
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    /// <summary>Hello!</summary>
+    // comment
+    int M() => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
+
+        [Test]
+        public void TestPropertyWithCommentBeforeReturn()
+        {
+            const string markupCode = @"
+class C
+{
+    [|int P
+    {
+        get
+        {
+            // comment
+            return 42;
+        }
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    // comment
+    int P => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
+
+        [Test]
+        public void TestPropertyWithCommentBeforeReturnAndXmlDocComment()
+        {
+            const string markupCode = @"
+class C
+{
+    /// <summary>Hello!</summary>
+    [|int P
+    {
+        get
+        {
+            // comment
+            return 42;
+        }
+    }|]
+}
+";
+
+            const string expected = @"
+class C
+{
+    /// <summary>Hello!</summary>
+    // comment
+    int P => 42;
+}
+";
+
+            TestCodeFix(markupCode, expected, DiagnosticDescriptors.UseExpressionBodiedMember);
+        }
     }
 }

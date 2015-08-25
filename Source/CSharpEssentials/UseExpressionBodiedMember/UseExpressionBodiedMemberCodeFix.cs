@@ -55,8 +55,15 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static async Task<Document> ReplaceWithExpressionBodiedMember(Document document, MethodDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
+            SyntaxTriviaList leadingTrivia;
+            var expression = GetExpressionAndLeadingTrivia(declaration.Body, out leadingTrivia);
+
+            var declarationTrivia = declaration.GetLeadingTrivia();
+            declarationTrivia = declarationTrivia.AddRange(leadingTrivia);
+
             var newDeclaration = declaration
-                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
+                .WithLeadingTrivia(declarationTrivia)
+                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(expression))
                 .WithBody(null)
                 .WithSemicolonToken(GetSemicolon(declaration.Body))
                 .WithAdditionalAnnotations(Formatter.Annotation);
@@ -69,8 +76,15 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static async Task<Document> ReplaceWithExpressionBodiedMember(Document document, OperatorDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
+            SyntaxTriviaList leadingTrivia;
+            var expression = GetExpressionAndLeadingTrivia(declaration.Body, out leadingTrivia);
+
+            var declarationTrivia = declaration.GetLeadingTrivia();
+            declarationTrivia = declarationTrivia.AddRange(leadingTrivia);
+
             var newDeclaration = declaration
-                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
+                .WithLeadingTrivia(declarationTrivia)
+                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(expression))
                 .WithBody(null)
                 .WithSemicolonToken(GetSemicolon(declaration.Body))
                 .WithAdditionalAnnotations(Formatter.Annotation);
@@ -83,8 +97,15 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static async Task<Document> ReplaceWithExpressionBodiedMember(Document document, ConversionOperatorDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
+            SyntaxTriviaList leadingTrivia;
+            var expression = GetExpressionAndLeadingTrivia(declaration.Body, out leadingTrivia);
+
+            var declarationTrivia = declaration.GetLeadingTrivia();
+            declarationTrivia = declarationTrivia.AddRange(leadingTrivia);
+
             var newDeclaration = declaration
-                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.Body)))
+                .WithLeadingTrivia(declarationTrivia)
+                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(expression))
                 .WithBody(null)
                 .WithSemicolonToken(GetSemicolon(declaration.Body))
                 .WithAdditionalAnnotations(Formatter.Annotation);
@@ -97,8 +118,15 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static async Task<Document> ReplaceWithExpressionBodiedMember(Document document, PropertyDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
+            SyntaxTriviaList leadingTrivia;
+            var expression = GetExpression(declaration.AccessorList, out leadingTrivia);
+
+            var declarationTrivia = declaration.GetLeadingTrivia();
+            declarationTrivia = declarationTrivia.AddRange(leadingTrivia);
+
             var newDeclaration = declaration
-                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
+                .WithLeadingTrivia(declarationTrivia)
+                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(expression))
                 .WithAccessorList(null)
                 .WithSemicolonToken(GetSemicolon(declaration.AccessorList))
                 .WithAdditionalAnnotations(Formatter.Annotation);
@@ -111,8 +139,15 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static async Task<Document> ReplaceWithExpressionBodiedMember(Document document, IndexerDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
+            SyntaxTriviaList leadingTrivia;
+            var expression = GetExpression(declaration.AccessorList, out leadingTrivia);
+
+            var declarationTrivia = declaration.GetLeadingTrivia();
+            declarationTrivia = declarationTrivia.AddRange(leadingTrivia);
+
             var newDeclaration = declaration
-                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(GetExpression(declaration.AccessorList)))
+                .WithLeadingTrivia(declarationTrivia)
+                .WithExpressionBody(SyntaxFactory.ArrowExpressionClause(expression))
                 .WithAccessorList(null)
                 .WithSemicolonToken(GetSemicolon(declaration.AccessorList))
                 .WithAdditionalAnnotations(Formatter.Annotation);
@@ -123,14 +158,24 @@ namespace CSharpEssentials.UseExpressionBodiedMember
             return document.WithSyntaxRoot(newRoot);
         }
 
-        private static ExpressionSyntax GetExpression(BlockSyntax block)
+        private static ExpressionSyntax GetExpressionAndLeadingTrivia(BlockSyntax block, out SyntaxTriviaList leadingTrivia)
         {
-            return ((ReturnStatementSyntax)block.Statements[0]).Expression;
+            var returnStatement = (ReturnStatementSyntax)block.Statements[0];
+            leadingTrivia = returnStatement.GetLeadingTrivia();
+
+            // TODO: Concatenate any trivia between the return keyword and the expression?
+
+            return returnStatement.Expression;
         }
 
-        private static ExpressionSyntax GetExpression(AccessorListSyntax accessorList)
+        private static ExpressionSyntax GetExpression(AccessorListSyntax accessorList, out SyntaxTriviaList leadingTrivia)
         {
-            return ((ReturnStatementSyntax)accessorList.Accessors[0].Body.Statements[0]).Expression;
+            var returnStatement = (ReturnStatementSyntax)accessorList.Accessors[0].Body.Statements[0];
+            leadingTrivia = returnStatement.GetLeadingTrivia();
+
+            // TODO: Concatenate any trivia between the return keyword and the expression?
+
+            return returnStatement.Expression;
         }
 
         private static SyntaxToken GetSemicolon(BlockSyntax block)
