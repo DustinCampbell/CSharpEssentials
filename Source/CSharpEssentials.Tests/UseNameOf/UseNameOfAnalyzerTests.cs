@@ -180,7 +180,7 @@ class C
     }
 }";
 
-            NoDiagnostic(code, DiagnosticIds.UseExpressionBodiedMember);
+            NoDiagnostic(code, DiagnosticIds.UseNameOf);
         }
     }
 }
