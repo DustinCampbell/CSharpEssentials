@@ -250,7 +250,7 @@ class C
         MyProperty = false;
     }
 
-    public (bool b)
+    public C(bool b)
     {
         MyProperty = b;
     }
@@ -295,6 +295,40 @@ class C
 }";
 
             NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
+        public void AutoPropCannotBeStaticIfAssignedInInstanceConstructor()
+        {
+            const string code = @"
+class C
+{
+    public static int P { get; private set; }
+
+    public C()
+    {
+        P = 2;
+    }
+}";
+
+            NoDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
+        }
+
+        [Test]
+        public void AutoPropCanBeStaticIfAssignedInStaticConstructor()
+        {
+            const string code = @"
+class C
+{
+    public static int P { get; [|private set;|] }
+
+    static C()
+    {
+        P = 2;
+    }
+}";
+
+            HasDiagnostic(code, DiagnosticIds.UseGetterOnlyAutoProperty);
         }
 
         private void VerifyNotAvailableInGeneratedCode(string filePath)

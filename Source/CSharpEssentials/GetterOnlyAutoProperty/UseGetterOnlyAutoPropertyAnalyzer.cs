@@ -89,7 +89,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
 
             // Is this an assignment to the property that is not within a constructor (for the identifier's containing type)?
             var updatedSymbol = semanticModel.GetSymbolInfo(updatingExpression, cancellationToken).Symbol;
-            return updatedSymbol == identifierSymbol && !IsWithinConstructorOf(updatingExpression.Parent, identifierSymbol.ContainingType, semanticModel, cancellationToken);
+            return updatedSymbol == identifierSymbol && !IsWithinConstructorOf(updatingExpression.Parent, identifierSymbol.ContainingType, identifierSymbol.IsStatic, semanticModel, cancellationToken);
         }
 
         private static HashSet<ISymbol> GetAutoPropsWithPrivateSetters(INamedTypeSymbol type, CancellationToken cancellationToken)
@@ -165,7 +165,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
             return null;
         }
 
-        private static bool IsWithinConstructorOf(SyntaxNode node, INamedTypeSymbol type, SemanticModel semanticModel, CancellationToken cancellationToken)
+        private static bool IsWithinConstructorOf(SyntaxNode node, INamedTypeSymbol type, bool identifierIsStatic, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
             // Are we in a constructor?
             for (; node != null; node = node.Parent)
@@ -175,7 +175,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                     case SyntaxKind.ConstructorDeclaration:
                         // In a constructor. Is it the constructor for the type that contains the property?
                         var constructorSymbol = semanticModel.GetDeclaredSymbol(node, cancellationToken);
-                        return constructorSymbol != null && (object)constructorSymbol.ContainingType == type;
+                        return constructorSymbol != null && (object)constructorSymbol.ContainingType == type && identifierIsStatic == constructorSymbol.IsStatic;
 
                     // If it's in a lambda expression, even if in a constructor, then it counts as a
                     // non-constructor case.
