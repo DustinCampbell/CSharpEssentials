@@ -22,7 +22,7 @@ namespace CSharpEssentials.UseNameOf
 
         private static void AnalyzeArgument(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }

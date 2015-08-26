@@ -23,7 +23,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static void HandleMethodDeclaration(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleOperatorDeclaration(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }
@@ -70,7 +70,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleConversionOperatorDeclaration(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }
@@ -91,7 +91,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private static void HandlePropertyDeclaration(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }
@@ -112,7 +112,7 @@ namespace CSharpEssentials.UseExpressionBodiedMember
 
         private void HandleIndexerDeclaration(SyntaxNodeAnalysisContext context)
         {
-            if (context.Node.SyntaxTree.IsGeneratedCode())
+            if (context.Node.SyntaxTree.IsGeneratedCode(context.CancellationToken))
             {
                 return;
             }

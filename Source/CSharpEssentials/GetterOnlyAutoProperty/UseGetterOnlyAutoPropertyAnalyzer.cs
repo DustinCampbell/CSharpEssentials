@@ -203,7 +203,7 @@ namespace CSharpEssentials.GetterOnlyAutoProperty
                 var property = (PropertyDeclarationSyntax)reference.GetSyntax(cancellationToken);
 
                 // If the property declaration is in generated code, we shouldn't create the diagnostic.
-                if (!property.SyntaxTree.IsGeneratedCode())
+                if (!property.SyntaxTree.IsGeneratedCode(cancellationToken))
                 {
                     var setter = property.AccessorList.Accessors.FirstOrDefault(a => a.IsKind(SyntaxKind.SetAccessorDeclaration));
                     if (setter != null)
