@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CSharpEssentials</id>
+    <version>1.0.5</version>
+    <authors>Dustin Campbell</authors>
+    <owners>Dustin Campbell</owners>
+    <licenseUrl>https://raw.githubusercontent.com/DustinCampbell/CSharpEssentials/master/License.txt</licenseUrl>
+    <projectUrl>http://github.com/DustinCampbell/CSharpEssentials</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# Essentials is a collection of Roslyn diagnostic analyzers, code fixes and refactorings that make it easy to work with C# language features.</description>
+    <copyright>Copyright 2015 by Dustin Campbell</copyright>
+    <language>en-US</language>
+    <tags>refactoring productivity C# refactor roslyn essentials</tags>
+  </metadata>
+</package>
